@@ -1,0 +1,18 @@
+actions:
+  1:
+    action: delete_indices
+    description: >-
+      Delete firewall and proxy indexs older than 31 days
+    options:
+      ignore_empty_list: True
+      disable_action: False
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: '^(filebeat-firewall|filebeat-proxy)'
+    - filtertype: age
+      source: name
+      direction: older
+      timestring: '%Y.%m.%d'
+      unit: days
+      unit_count: 31
