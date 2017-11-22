@@ -1,0 +1,34 @@
+actions:
+  1:
+    action: alias
+    description: >-
+      Add 'activedirectory' alias to current week index.
+      Remove 'activedirectory' alias from previous week index.
+    options:
+      name: activedirectory
+      ignore_empty_list: True
+      warn_if_no_indices: False
+      disable_action: False
+    add:
+      filters:
+      - filtertype: pattern
+        kind: prefix
+        value: filebeat-ad-
+        exclude:
+      - filtertype: period
+        source: name
+        range_from: 0
+        range_to: 0
+        timestring: '%Y.%W'
+        unit: weeks
+    remove:
+      filters:
+      - filtertype: pattern
+        kind: prefix
+        value: filebeat-ad-
+      - filtertype: period
+        source: name
+        range_from: -1
+        range_to: -1
+        timestring: '%Y.%W'
+        unit: weeks
